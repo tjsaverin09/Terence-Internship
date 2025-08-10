@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
 
@@ -90,7 +91,7 @@ const HotCollections = () => {
               className="keen-slider-arrow keen-slider-arrow--left"
               onClick={() => instanceRef.current && instanceRef.current.prev()}
             >
-              &#8592;
+              <IoIosArrowBack />
             </button>
             {!loading ? (
               <>
@@ -140,7 +141,7 @@ const HotCollections = () => {
               className="keen-slider-arrow keen-slider-arrow--right"
               onClick={() => instanceRef.current && instanceRef.current.next()}
             >
-              &#8594;
+              <IoIosArrowForward />
             </button>
           </div>
         </div>
