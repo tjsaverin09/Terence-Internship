@@ -43,7 +43,7 @@ const HotCollections = () => {
     );
     setLoading(false);
     setNftInfo(data);
-    console.log(data);
+    console.log( "HotCollData", data);
   }
 
   function renderLoadingState() {
@@ -53,7 +53,7 @@ const HotCollections = () => {
           <div className="keen-slider__slide" key={id}>
             <div className="nft_coll nft_coll--skeleton">
               <div className="nft_wrap">
-                <div className="nft__img--skeleton skeleton-box"></div>
+                <div className="nft-item__img--skeleton skeleton-box"></div>
               </div>
               <div className="nft_coll_pp">
                 <div className="nft__pp--skeleton skeleton-box"></div>
