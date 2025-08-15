@@ -4,6 +4,7 @@ import axios from "axios";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
+import { formatCountdown } from "../utils/FormatCountdown";
 
 const NewItems = () => {
   const [newItemsData, setNewitemsData] = useState([]);
@@ -42,16 +43,6 @@ const NewItems = () => {
     setNewitemsData(data);
   }
 
-  function formatCountdown(expiryDate) {
-    const diff = expiryDate - now;
-    if (diff <= 0) return "Expired";
-
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    return `${hours}h ${minutes}m ${seconds}s`;
-  }
 
   function hotItemsLoadingState() {
     return (
@@ -133,7 +124,7 @@ const NewItems = () => {
                           </Link>
                         </div>
                         <div className="de_countdown">
-                          {formatCountdown(nft.expiryDate)}
+                          {formatCountdown(nft.expiryDate, now)}
                         </div>
 
                         <div className="nft__item_wrap">
