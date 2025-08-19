@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import "keen-slider/keen-slider.min.css";
@@ -37,13 +37,21 @@ const HotCollections = () => {
   );
 
   async function getHotCollectionData() {
-    setLoading(true);
+    try {
+          setLoading(true);
     const { data } = await axios.get(
       "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
     );
-    setLoading(false);
+   
     setNftInfo(data);
     console.log( "HotCollData", data);
+    }
+    catch {
+      console.log("Error Fetching API Data");
+    }
+    finally {
+    setLoading(false);
+    }
   }
 
   function renderLoadingState() {
@@ -112,7 +120,7 @@ const HotCollections = () => {
                           </Link>
                         </div>
                         <div className="nft_coll_pp">
-                          <Link to="/author">
+                          <Link to={`/author/${nft.authorId}`}>
                             <img
                               className="lazy pp-coll"
                               src={nft.authorImage}

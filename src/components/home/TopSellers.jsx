@@ -8,14 +8,22 @@ const TopSellers = () => {
   const [loading, setLoading] = useState(false);
 
   async function getTopSellerData() {
-    setLoading(true);
+    try {
+      setLoading(true);
     const { data } = await axios.get(
       "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"
     );
     console.log("TopSellerData:", data);
-    setLoading(false);
     setTopSellerData(data);
+    }
+    catch {
+      console.log("Error Fetching API Data");
+    }
+    finally {
+      setLoading(false);
+    }
   }
+    
 
   function topSellerLoadingState() {
     return (
@@ -58,7 +66,7 @@ const TopSellers = () => {
                   {topSellerData.map((nft, id) => (
                     <li key={id}>
                       <div className="author_list_pp">
-                        <Link to="/author">
+                        <Link to={`/author/${nft.authorId}`}>
                           <img
                             className="lazy pp-author"
                             src={nft.authorImage}

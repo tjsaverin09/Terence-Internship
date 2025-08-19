@@ -11,13 +11,20 @@ const ExploreItems = () => {
   const [filter, setFilter] = useState("");
   
   async function getExploreData(selectedFilter) {
-    setLoading(true);
+    try{
+      setLoading(true);
     const { data } = await axios.get(
       `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore?filter=${selectedFilter}`
     );
     console.log("ExplorePageData:", data);
-    setLoading(false);
     setExploreData(data);
+    }
+    catch {
+      console.log("Error Fetching API Data");
+    }
+    finally {
+      setLoading(false);
+    }  
   }
 
   function explorePageSkeleton() {
@@ -80,7 +87,7 @@ const ExploreItems = () => {
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link
-                    to="/author"
+                    to={`/author/${nft.authorId}`}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                   >
