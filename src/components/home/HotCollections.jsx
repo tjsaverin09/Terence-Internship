@@ -33,10 +33,7 @@ const HotCollections = () => {
       slideChanged() {
         console.log("slide changed");
       },
-    },
-    [
-      // add plugins here
-    ]
+    }
   );
 
   async function getHotCollectionData() {
