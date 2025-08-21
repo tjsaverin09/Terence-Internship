@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
 import axios from "axios";
+import AOS from "aos";
+import 'aos/dist/aos.css';
 
 const TopSellers = () => {
   const [topSellerData, setTopSellerData] = useState([]);
@@ -49,6 +50,10 @@ const TopSellers = () => {
     getTopSellerData();
   }, []);
 
+   useEffect(() => {
+      AOS.init();
+    }, []);
+
   return (
     <section id="section-popular" className="pb-5">
       <div className="container">
@@ -60,7 +65,7 @@ const TopSellers = () => {
             </div>
           </div>
           <div className="col-md-12">
-            <ol type="1" className="author_list">
+            <ol type="1" className="author_list" data-aos="fade-in">
               {!loading ? (
                 <>
                   {topSellerData.map((nft, id) => (

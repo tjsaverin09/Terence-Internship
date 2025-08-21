@@ -5,6 +5,8 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
 import { formatCountdown } from "../utils/FormatCountdown";
+import AOS from "aos";
+import 'aos/dist/aos.css';
 
 const NewItems = () => {
   const [newItemsData, setNewitemsData] = useState([]);
@@ -75,8 +77,12 @@ const NewItems = () => {
           </div>
         ))}
       </div>
-    );
-  }
+    )
+  };
+
+   useEffect(() => {
+      AOS.init();
+    }, []);
 
   useEffect(() => {
     getNewItemsData();
@@ -99,7 +105,7 @@ const NewItems = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <div className="keen-slider__container">
+          <div className="keen-slider__container" data-aos="fade-in">
             <button
               className="keen-slider-arrow keen-slider-arrow--left"
               onClick={() => instanceRef.current && instanceRef.current.prev()}
@@ -112,6 +118,7 @@ const NewItems = () => {
                   {newItemsData.map((nft, index) => (
                     <div
                       className="col-lg-3 col-md-6 col-sm-6 col-xs-12 keen-slider__slide"
+                      
                       key={index}
                     >
                       <div className="nft__item">
