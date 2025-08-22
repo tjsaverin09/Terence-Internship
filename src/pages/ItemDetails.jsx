@@ -55,7 +55,6 @@ const ItemDetails = () => {
           <div className="spacer-40"></div>
           <h6>Price</h6>
           <div className="nft-item-price">
-            
             <div className="skeleton-box" style={{width: "100%", maxWidth: "88px",minHeight: "30px", borderRadius: "5px"}}></div>
           </div>
         </div>
