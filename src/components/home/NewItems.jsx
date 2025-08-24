@@ -4,6 +4,9 @@ import axios from "axios";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
+import { formatCountdown } from "../utils/FormatCountdown";
+import AOS from "aos";
+import 'aos/dist/aos.css';
 
 const NewItems = () => {
   const [newItemsData, setNewitemsData] = useState([]);
@@ -33,25 +36,22 @@ const NewItems = () => {
   });
 
   async function getNewItemsData() {
-    setLoading(true);
+    try {
+       setLoading(true);
     const { data } = await axios.get(
       "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
     );
     console.log("NewItemsData", data);
-    setLoading(false);
     setNewitemsData(data);
+    }
+    catch {
+      console.log("Error Fetching API Data");
+    }
+    finally {
+     setLoading(false); 
+    }
   }
 
-  function formatCountdown(expiryDate) {
-    const diff = expiryDate - now;
-    if (diff <= 0) return "Expired";
-
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    return `${hours}h ${minutes}m ${seconds}s`;
-  }
 
   function hotItemsLoadingState() {
     return (
@@ -77,8 +77,12 @@ const NewItems = () => {
           </div>
         ))}
       </div>
-    );
-  }
+    )
+  };
+
+   useEffect(() => {
+      AOS.init();
+    }, []);
 
   useEffect(() => {
     getNewItemsData();
@@ -101,7 +105,7 @@ const NewItems = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <div className="keen-slider__container">
+          <div className="keen-slider__container" data-aos="fade-in">
             <button
               className="keen-slider-arrow keen-slider-arrow--left"
               onClick={() => instanceRef.current && instanceRef.current.prev()}
@@ -114,12 +118,13 @@ const NewItems = () => {
                   {newItemsData.map((nft, index) => (
                     <div
                       className="col-lg-3 col-md-6 col-sm-6 col-xs-12 keen-slider__slide"
+                      
                       key={index}
                     >
                       <div className="nft__item">
                         <div className="author_list_pp">
                           <Link
-                            to="/author"
+                            to={`/author/${nft.authorId}`}
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
                             title="Creator: Monica Lucas"
@@ -133,7 +138,7 @@ const NewItems = () => {
                           </Link>
                         </div>
                         <div className="de_countdown">
-                          {formatCountdown(nft.expiryDate)}
+                          {formatCountdown(nft.expiryDate, now)}
                         </div>
 
                         <div className="nft__item_wrap">
@@ -155,7 +160,7 @@ const NewItems = () => {
                             </div>
                           </div>
 
-                          <Link to="/item-details">
+                          <Link to={`/item-details/${nft.nftId}`}>
                             <img
                               src={nft.nftImage}
                               className="lazy nft__item_preview "

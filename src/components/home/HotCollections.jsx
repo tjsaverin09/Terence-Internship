@@ -4,6 +4,9 @@ import axios from "axios";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 const HotCollections = () => {
   const [nftInfo, setNftInfo] = useState([]);
@@ -30,27 +33,32 @@ const HotCollections = () => {
       slideChanged() {
         console.log("slide changed");
       },
-    },
-    [
-      // add plugins here
-    ]
+    }
   );
 
   async function getHotCollectionData() {
-    setLoading(true);
+    try {
+          setLoading(true);
     const { data } = await axios.get(
       "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
     );
-    setLoading(false);
+   
     setNftInfo(data);
     console.log( "HotCollData", data);
+    }
+    catch {
+      console.log("Error Fetching API Data");
+    }
+    finally {
+    setLoading(false);
+    }
   }
 
   function renderLoadingState() {
     return (
       <div ref={sliderRef} className="keen-slider">
         {new Array(4).fill(0).map((_, id) => (
-          <div className="keen-slider__slide" key={id}>
+          <div className="keen-slider__slide"  key={id}>
             <div className="nft_coll nft_coll--skeleton">
               <div className="nft_wrap">
                 <div className="nft-item__img--skeleton skeleton-box"></div>
@@ -73,6 +81,10 @@ const HotCollections = () => {
   }
 
   useEffect(() => {
+    AOS.init();
+  }, []);
+
+  useEffect(() => {
     getHotCollectionData();
   }, []);
 
@@ -86,7 +98,7 @@ const HotCollections = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <div className="keen-slider__container">
+          <div className="keen-slider__container" data-aos="fade-in">
             <button
               className="keen-slider-arrow keen-slider-arrow--left"
               onClick={() => instanceRef.current && instanceRef.current.prev()}
@@ -103,7 +115,7 @@ const HotCollections = () => {
                     >
                       <div className="nft_coll">
                         <div className="nft_wrap">
-                          <Link to="/item-details">
+                          <Link to={`/item-details/${nft.nftId}`}>
                             <img
                               src={nft.nftImage}
                               className="lazy img-fluid"
@@ -112,7 +124,7 @@ const HotCollections = () => {
                           </Link>
                         </div>
                         <div className="nft_coll_pp">
-                          <Link to="/author">
+                          <Link to={`/author/${nft.authorId}`}>
                             <img
                               className="lazy pp-coll"
                               src={nft.authorImage}
