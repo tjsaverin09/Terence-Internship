@@ -40,7 +40,7 @@ const NewItems = () => {
     console.log("NewItemsData", data);
     setLoading(false);
     setNewitemsData(data);
-  }
+  };
 
   function formatCountdown(expiryDate) {
     const diff = expiryDate - now;
@@ -51,7 +51,7 @@ const NewItems = () => {
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
     return `${hours}h ${minutes}m ${seconds}s`;
-  }
+  };
 
   function hotItemsLoadingState() {
     return (
@@ -159,7 +159,7 @@ const NewItems = () => {
                             <img
                               src={nft.nftImage}
                               className="lazy nft__item_preview "
-                              alt=""
+                              alt="nft image"
                             />
                           </Link>
                         </div>
