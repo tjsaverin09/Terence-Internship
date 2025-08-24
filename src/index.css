@@ -116,7 +116,7 @@ NEW ITEMS
 }
 
 .nft-item__pp--skeleton {
-width: 45px;
+  width: 45px;
   height: 45px;
   border-radius: 100%;
   background-color: #dddbdd;
@@ -151,4 +151,32 @@ width: 45px;
   font-size: 14px;
   color: #ddd;
   float: right;
+}
+
+/*
+
+TOP SELLERS
+
+*/
+
+.pp-author-skeleton {
+ width: 45px;
+  height: 45px;
+  border-radius: 100%;
+  background-color: #dddbdd;
+  margin: auto;
+}
+
+.author_list_info__skeleton {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-list__name--skeleton {
+    width: 96px;
+    margin-bottom: 8px;
+}
+
+.author-list__price--skeleton {
+    width: 40px;
 }
